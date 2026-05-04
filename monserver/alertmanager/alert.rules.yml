@@ -1,0 +1,22 @@
+groups:
+  - name: system-alerts
+    rules:
+
+      # 🔴 Instance Down Alert
+      - alert: InstanceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance is DOWN"
+
+      # 🔥 High CPU Usage Alert (>20%)
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance)(rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 20
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage detected (>20%)"
+          description: "CPU usage is above 20% for more than 1 minute"
