@@ -1,0 +1,15 @@
+# Never commit secrets to Git
+.env
+
+# Docker volumes / local data
+prometheus_data/
+grafana_data/
+alertmanager_data/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp

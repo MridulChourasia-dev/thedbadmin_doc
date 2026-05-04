@@ -1,0 +1,32 @@
+global:
+  scrape_interval: 5s          # How often to scrape targets
+
+# Link to alert rules
+rule_files:
+  - "alert.rules.yml"
+
+# Alertmanager connection
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - "alertmanager:9093"
+
+scrape_configs:
+
+  # Prometheus self-monitoring
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["prometheus:9090"]
+
+  # Node Exporter - system metrics (CPU, RAM, Disk)
+  # Install node_exporter on the DB server, default port 9100
+  - job_name: "node_exporter"
+    static_configs:
+      - targets: ["192.168.1.125:9100"]   # <-- Change to your DB server IP
+
+  # Postgres Exporter - PostgreSQL metrics
+  # Install postgres_exporter on the DB server, default port 9187
+  - job_name: "postgres_exporter"
+    static_configs:
+      - targets: ["192.168.1.125:9187"]   # <-- Change to your DB server IP
